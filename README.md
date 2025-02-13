@@ -8,7 +8,7 @@ raster image tracer (+by user input, ~several of http://paperjs.org/examples/ or
 vectors are low-res pictures detailed gradually (~kanji or progressive jpeg), halftone points / lines / shapes in RGB or CMYK    
 connect to Panoramera  
   
-mouse velocity to parameter  
+handle mouse velocity  
 http://paperjs.org/features/#mouse-interaction  
 http://paperjs.org/tutorials/interaction/mouse-tool-events/  
 http://paperjs.org/tutorials/interaction/creating-mouse-tools/  
