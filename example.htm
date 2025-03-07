@@ -13,8 +13,8 @@ html, body {
 // Based on 'JPEG Raster' by Jonathan Puckey:
 // http://www.flickr.com/photos/puckey/3179779686/in/photostream/
 
-// Create a raster item using the image with id='mona'
-var raster = new Raster('mona');
+// Create a raster item using the image with id='noise'
+var raster = new Raster('noise.png');
 
 // Make the raster invisible:
 raster.visible = false;
@@ -71,6 +71,5 @@ function onResize(event) {
 </head>
 <body>
     <canvas id="myCanvas" resize width="1200" height="1200"></canvas>
-    <img width="1200" height="1200" id="mona" style="display: none;" crossorigin="anonymous" src="noise.png">
 </body>
 </html>
