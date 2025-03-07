@@ -11,7 +11,7 @@ canvas {
 <script type="text/javascript" src="js/lib/paper-full.min.js"></script>
 <!-- Define inlined PaperScript associate it with myCanvas -->
 <script type="text/paperscript" canvas="myCanvas">
-// Ported from original Metaball script by SATO Hiroyuki
+        // Ported from original Metaball script by SATO Hiroyuki
         // http://park12.wakwak.com/~shp/lc/et/en_aics_script.html
         project.currentStyle = {
             fillColor: 'black'
@@ -50,7 +50,7 @@ canvas {
 
             for (var i = 0, l = paths.length; i < l; i++) {
                 for (var j = i - 1; j >= 0; j--) {
-                    var path = metaball(paths[i], paths[j], 0.67, handle_len_rate, 300);
+                    var path = metaball(paths[i], paths[j], 0.5, handle_len_rate, 300);
                     if (path) {
                         connections.appendTop(path);
                         path.removeOnMove();
