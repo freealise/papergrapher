@@ -5,7 +5,7 @@ A working version can be found at https://w00dn.github.io/papergrapher/
 
 ## TODO:
 raster image tracer (use metaballs example, gist for findContours, or geometrizer / primitive.js)  
-vectors are low-res pictures detailed gradually (~kanji or progressive jpeg), halftone points / lines / shapes in RGB or CMYK    
+vectors are low-res pictures detailed gradually (~progressive jpeg), halftone points / lines / shapes in RGB or CMYK    
 storyboards as vectorized photos; connect to Panoramera  
   
 ### handle mouse velocity  
