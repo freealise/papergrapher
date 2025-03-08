@@ -55,7 +55,7 @@ canvas {
                         largeCircle = largeCircle.unite(path);
                         connections.appendTop(path);
                         path.remove();
-                        path.removeOnMove();
+                        largeCircle.removeOnMove();
                     }
                 }
             }
