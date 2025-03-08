@@ -48,22 +48,18 @@ canvas {
             // Remove the last connection paths:
             connections.removeChildren();
 
-            var gpath = new Path.Circle({
-              center: largeCircle.center,
-              radius: 100
-            });
             for (var i = 0, l = paths.length; i < l; i++) {
                 for (var j = i - 1; j >= 0; j--) {
                     var path = metaball(paths[i], paths[j], 0.5, handle_len_rate, 300);
                     if (path) {
-                        gpath = gpath.unite(path);
-                        //connections.appendTop(path);
-                        path.remove();
-                        gpath.removeOnMove();
+                        paths[j] = paths[j].unite(path);
+                        paths[i] = paths[i].unite(paths[j]);
+                        connections.appendTop(paths[i]);
+                        paths[j].remove();
+                        paths[i].removeOnMove();
                     }
                 }
             }
-            connections.appendTop(gpath);
             //gpath.simplify(10);
         }
 
