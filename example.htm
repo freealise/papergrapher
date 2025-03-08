@@ -57,13 +57,14 @@ canvas {
                     var path = metaball(paths[i], paths[j], 0.5, handle_len_rate, 300);
                     if (path) {
                         gpath = gpath.unite(path);
-                        connections.appendTop(path);
+                        //connections.appendTop(path);
                         path.remove();
                         gpath.removeOnMove();
                     }
                 }
             }
-            gpath.simplify(10);
+            connections.appendTop(gpath);
+            //gpath.simplify(10);
         }
 
         generateConnections(circlePaths);
