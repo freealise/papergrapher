@@ -14,7 +14,8 @@ canvas {
         // Ported from original Metaball script by SATO Hiroyuki
         // http://park12.wakwak.com/~shp/lc/et/en_aics_script.html
         project.currentStyle = {
-            fillColor: 'black'
+            fillColor: 'none',
+            strokeColor: 'black'
         };
 
         var ballPositions = [[255, 129], [610, 73], [486, 363],
@@ -48,14 +49,18 @@ canvas {
             // Remove the last connection paths:
             connections.removeChildren();
 
+            var gpath = new Path.Circle({
+              center: largeCircle.center,
+              radius: 0
+            });
             for (var i = 0, l = paths.length; i < l; i++) {
                 for (var j = i - 1; j >= 0; j--) {
                     var path = metaball(paths[i], paths[j], 0.75, handle_len_rate, 300);
                     if (path) {
-                        largeCircle = largeCircle.unite(path);
+                        gpath = gpath.unite(path);
                         connections.appendTop(path);
                         path.remove();
-                        largeCircle.removeOnMove();
+                        gpath.removeOnMove();
                     }
                 }
             }
