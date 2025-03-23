@@ -4,8 +4,8 @@ Vector Editor based on Paper.js
 A working version can be found at https://w00dn.github.io/papergrapher/
 
 ## TODO:
-raster image and dot pattern tracer: use opencv.js findContours with simplifyPath and unite (https://stackoverflow.com/questions/71077189/merging-two-bezier-based-shapes-into-one-to-create-a-new-outline/), or geometrizer / primitive.js  
-vectors are low-res pictures detailed gradually (~progressive jpeg), halftone points / lines / shapes in RGB or CMYK    
+raster image tracer: use opencv.js findContours with simplifyPath and unite (https://stackoverflow.com/questions/71077189/merging-two-bezier-based-shapes-into-one-to-create-a-new-outline/), or geometrizer / primitive.js  
+halftone points / lines / shapes in RGB or CMYK (dither or scatter vector point coordinates by varying random distance)  
 storyboards as vectorized photos; connect to Panoramera  
   
 ### handle mouse velocity  
