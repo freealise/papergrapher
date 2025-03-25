@@ -32,7 +32,7 @@
 
   <select id="ath" oninput="trace();"><option value="cv.ADAPTIVE_THRESH_MEAN_C" selected>mean</option><option value="cv.ADAPTIVE_THRESH_GAUSSIAN_C">gaussian</option></select>
 
-  <button class="clr" onclick="document.getElementById('cs').value--;">&lt;</button><input id="cs" type="number" value="2" min="2" max="255" step="1" onchange="kmeans();trace();"/><button class="clr" onclick="document.getElementById('cs').value++;">&gt;</button> colors<br/>
+  <button class="clr" onclick="document.getElementById('cs').value--;">&lt;</button><input id="cs" type="number" value="2" min="1" max="256" step="1"/><button class="clr" onclick="document.getElementById('cs').value++;">&gt;</button> colors<br/>
     </div>
   </div>
   <div>
@@ -85,7 +85,7 @@
 
   // https://answers.opencv.org/question/206557/how-can-you-use-k-means-clustering-to-posterize-an-image-using-opencv-javascript/
 
-var newImage, colors;
+var newImage, colors, cl, indices;
 var clusterCount = null;
 var posterInput = [];
 var canvasOutput = [];
@@ -114,21 +114,27 @@ try {
 
   cv.kmeans(sample, clusterCount, labels, crite, attempts, cv.KMEANS_PP_CENTERS, centers );
 
-  newImage = new Array(clusterCount+1);
+  newImage = new Array(clusterCount);
   colors = new Array(clusterCount);
+  cl = new Array(clusterCount);
 
-  for(var i = 0; i <= clusterCount; i++) {
+  for(var i = 0; i < clusterCount; i++) {
     newImage[i] = new cv.Mat(mat.size(), mat.type());
     
-    if (i < clusterCount) {
-      colors[i] = 'rgba(' + parseInt(centers.floatAt(i, 0)) + ',' + parseInt(centers.floatAt(i, 1)) + ',' + parseInt(centers.floatAt(i, 2)) + ',' + parseFloat(centers.floatAt(i, 3)/255) + ')';
-      console.log(colors[i]);
-    }
+    cl[i] = new Array(4);
+    cl[i][0] = parseInt(centers.floatAt(i, 0));
+    cl[i][1] = parseInt(centers.floatAt(i, 1));
+    cl[i][2] = parseInt(centers.floatAt(i, 2));
+    cl[i][3] = parseFloat(centers.floatAt(i, 3)/255);
+
+    colors[i] = 'rgba(' + cl[i][0] + ',' + cl[i][1] + ',' + cl[i][2] + ',' + cl[i][3] + ')';
+    console.log(colors[i]);
+
     for( var y = 0; y < mat.rows; y++ ) {
       for( var x = 0; x < mat.cols; x++ ) {
         var cluster_idx = labels.intAt(y + x*mat.rows, 0);
 
-        if (i == cluster_idx || i == clusterCount) {
+        if (i == cluster_idx) {
           var red_ = new Uint8Array(1);
           var green_ = new Uint8Array(1);
           var blue_ = new Uint8Array(1);
@@ -154,14 +160,28 @@ try {
   }
   posterInput = new Array(clusterCount);
   document.getElementById('canvases').innerHTML = '';
+  
+  indices = new Array(clusterCount);
+  for (var i = 0; i < clusterCount; i++) {
+    indices[i] = i;
+  }
+  indices.sort(function (a, b) { 
+    return cl[a][0]+cl[a][1]+cl[a][2] < cl[b][0]+cl[b][1]+cl[b][2];
+  });
 
+  var labels = [];
   for (var i=0; i<clusterCount; i++) {
     posterInput[i] = document.createElement("canvas");
     posterInput[i].id = 'posterInput' + i;
     const ctx = posterInput[i].getContext("2d");
     ctx.imageSmoothingEnabled = false;
+    
+    labels[i] = document.createElement("span");
+    labels[i].innerText = i + '•' + colors[indices[i]];
+
+    document.getElementById('canvases').appendChild(labels[i]);
     document.getElementById('canvases').appendChild(posterInput[i]);
-    cv.imshow('posterInput' + i, newImage[i]);
+    cv.imshow('posterInput' + i, newImage[indices[i]]);
   }
   mat.delete();
 
@@ -254,7 +274,7 @@ try {
         holes[0] = null;  //is the frame
       }
       if (holes[i] === false) {
-        svg = svg.slice(0,-1) + '" fill="'+colors[k]+'" stroke="'+colors[k]+'" stroke-width="0"/>';
+        svg = svg.slice(0,-1) + '" fill="'+colors[indices[k]]+'" stroke="'+colors[indices[k]]+'" stroke-width="0"/>';
       } else if (holes[i] === true) {
         svg = svg.slice(0,-1) + '" fill="rgba(255,255,255,1.0)" stroke="rgba(255,255,255,1.0)" stroke-width="1"/>';
       } else {
@@ -276,6 +296,24 @@ try {
 
 } catch (e) {alert(e);}
 };
+
+
+function showOriginal() {
+  clusterCount = 2;
+  colors = [null, 'rgba(0,0,0,1.0)'];
+
+  newImage = new Array(2);
+  newImage[0] = cv.imread('canvasInput');
+  newImage[1] = newImage[0];
+  document.getElementById('canvases').innerHTML = '';
+
+  posterInput = [ null, document.createElement("canvas") ];
+  posterInput[1].id = 'posterInput1';
+  const ctx = posterInput[1].getContext("2d");
+  ctx.imageSmoothingEnabled = false;
+  document.getElementById('canvases').appendChild(posterInput[1]);
+  cv.imshow('posterInput1', newImage[1]);
+}
   
 
   let utils = new Utils('errorMessage');
@@ -285,7 +323,11 @@ try {
   tryIt.addEventListener('click', () => {
 
     if (clusterCount == null || clusterCount != parseInt(document.getElementById('cs').value)) {
-      kmeans();
+      if (parseInt(document.getElementById('cs').value) > 1) {
+        kmeans();
+      } else {
+        showOriginal();
+      }
     }
     trace();
   });
@@ -314,10 +356,23 @@ try {
   for (let j = 0; j < clrs.length; j++) {
     clrs[j].addEventListener('click', (e) => {
 
-      kmeans();
+      if (parseInt(document.getElementById('cs').value) > 1) {
+        kmeans();
+      } else {
+        showOriginal();
+      }
       trace();
     });
   }
+  document.getElementById('cs').addEventListener('change', (e) => {
+
+    if (parseInt(document.getElementById('cs').value) > 1) {
+      kmeans();
+    } else {
+      showOriginal();
+    }
+    trace();
+  });
 
   utils.loadOpenCv(() => {
     tryIt.removeAttribute('disabled');
