@@ -57,6 +57,7 @@
         <td>
           <span id="svgc"></span>
           <img src="" id="svg_img"/>
+          <button onclick="exportSvg();">OK</button>
         </td>
       </tr>
       <tr>
@@ -352,6 +353,13 @@ function calcDifference() {
     document.getElementById('svgc').appendChild(c_out);
   }
   svg_img.src = 'data:image/svg+xml;base64,' + btoa(document.getElementById('svgc').innerHTML);
+};
+
+
+function exportSvg() {
+try {
+  window.top.pg.import.importAndAddSVG('data:image/svg+xml;base64,' + btoa(document.getElementById('svgc').innerHTML));
+} catch(e) {alert(e);}
 };
   
 
