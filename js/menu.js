@@ -121,10 +121,10 @@ pg.menu = function() {
 		
 		jQuery('.traceImage_button').click(function () {
 			jQuery('#tracerIframe').toggleClass("hidden");
-			/*var url = prompt("Paste URL to SVG", "http://");
-			if (url) {
-				pg.import.importAndAddSVG(url);
-			}*/
+			if (jQuery('#svgData').value != "") {
+				pg.import.importAndAddSVG(jQuery('#svgData').value);
+				jQuery('#svgData').value = "";
+			}
 		});
 		
 		jQuery('.exportJSON_button').click(function() {
