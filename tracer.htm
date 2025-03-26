@@ -358,7 +358,8 @@ function calcDifference() {
 
 function exportSvg() {
 try {
-  window.top.pg.import.importAndAddSVG(document.getElementById('svgc').innerHTML);
+  window.top.document.getElementById('svgData').value = document.getElementById('svgc').innerHTML;
+  window.top.document.getElementById('svgData').click();
 } catch(e) {alert(e);}
 };
   
