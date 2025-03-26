@@ -119,6 +119,14 @@ pg.menu = function() {
 			}
 		});
 		
+		jQuery('.traceImage_button').click(function () {
+			jQuery('#tracerIframe').removeClass('hidden');
+			/*var url = prompt("Paste URL to SVG", "http://");
+			if (url) {
+				pg.import.importAndAddSVG(url);
+			}*/
+		});
+		
 		jQuery('.exportJSON_button').click(function() {
 			pg.document.saveJSONDocument();
 		});
