@@ -11,6 +11,9 @@
       width: 48px;
       height: 36px;
     }
+    #svg_img {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -52,7 +55,8 @@
           </span>
         </td>
         <td>
-          <div id="svgc"></div>
+          <span id="svgc"></span>
+          <img src="" id="svg_img"/>
         </td>
       </tr>
       <tr>
@@ -127,7 +131,7 @@ try {
     cl[i][2] = parseInt(centers.floatAt(i, 2));
     cl[i][3] = parseFloat(centers.floatAt(i, 3)/255);
 
-    colors[i] = 'rgba(' + cl[i][0] + ',' + cl[i][1] + ',' + cl[i][2] + ',' + cl[i][3] + ')';
+    colors[i] = 'rgba(' + cl[i][0] + ',' + cl[i][1] + ',' + cl[i][2] + ',' + cl[i][3].toFixed(2) + ')';
     console.log(colors[i]);
 
     for( var y = 0; y < mat.rows; y++ ) {
@@ -176,8 +180,8 @@ try {
     const ctx = posterInput[i].getContext("2d");
     ctx.imageSmoothingEnabled = false;
     
-    labels[i] = document.createElement("span");
-    labels[i].innerText = i + '•' + colors[indices[i]];
+    labels[i] = document.createElement("div");
+    labels[i].innerText = i + ' ' + colors[indices[i]];
 
     document.getElementById('canvases').appendChild(labels[i]);
     document.getElementById('canvases').appendChild(posterInput[i]);
@@ -210,26 +214,6 @@ try {
     let poly = new cv.MatVector();
 
     cv.findContours(src, contours, hierarchy, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE);
-    let hier = [];
-    let holes = [];
-    for (let j = 0; j < hierarchy.data32S.length; j+=4){
-      hier[j/4] = new Array(4);
-
-      hier[j/4][0] = hierarchy.data32S[j];
-      hier[j/4][1] = hierarchy.data32S[j+1];
-      hier[j/4][2] = hierarchy.data32S[j+2];
-      hier[j/4][3] = hierarchy.data32S[j+3];
-    }
-    for (let j = 0; j < hier.length; j++){
-      var pt = hier[j][3];
-      holes[j] = true;
-
-      while (pt > -1) {
-        holes[j] = !holes[j];
-        pt = hier[pt][3];
-      }
-    }
-    //alert(JSON.stringify(hier) + '\n\n' + JSON.stringify(holes));
 
     // approximates each contour to polygon
     let points = [];
@@ -251,6 +235,27 @@ try {
       //console.log(points[i]);
       cnt.delete(); tmp.delete();
     }
+
+    let hier = [];
+    let holes = [];
+    for (let j = 0; j < hierarchy.data32S.length; j+=4){
+      hier[j/4] = new Array(4);
+
+      hier[j/4][0] = hierarchy.data32S[j];
+      hier[j/4][1] = hierarchy.data32S[j+1];
+      hier[j/4][2] = hierarchy.data32S[j+2];
+      hier[j/4][3] = hierarchy.data32S[j+3];
+    }
+    for (let j = 0; j < hier.length; j++){
+      var pt = hier[j][3];
+      holes[j] = true;
+
+      while (pt > -1) {
+        holes[j] = !holes[j];
+        pt = hier[pt][3];
+      }
+    }
+    //alert(JSON.stringify(hier) + '\n\n' + JSON.stringify(holes));
 
     // draw contours
     for (let i = 0; i < contours.size(); ++i) {
@@ -294,6 +299,8 @@ try {
   document.getElementById('errorMessage').innerText = svg;
   document.getElementById('svgc').innerHTML = svg;
 
+  calcDifference();
+
 } catch (e) {alert(e);}
 };
 
@@ -313,7 +320,39 @@ function showOriginal() {
   ctx.imageSmoothingEnabled = false;
   document.getElementById('canvases').appendChild(posterInput[1]);
   cv.imshow('posterInput1', newImage[1]);
-}
+};
+
+
+function calcDifference() {
+  var svg_img = document.getElementById('svg_img');
+  var c_out = document.createElement("canvas");
+  c_out.style.border = '1px dotted gray';
+
+  svg_img.onload = function() {
+    c_out.width = svg_img.width;
+    c_out.height = svg_img.height;
+
+    const ctx_out = c_out.getContext("2d");
+    const ctx_in = document.getElementById('canvasInput').getContext("2d");
+
+    ctx_out.fillStyle = "rgba(255,255,255,255)";
+    ctx_out.fillRect(0, 0, c_out.width, c_out.height);
+    ctx_out.drawImage(svg_img, 0, 0);
+
+    const imgData_in = ctx_in.getImageData(0, 0, svg_img.width, svg_img.height);
+    const imgData_out = ctx_out.getImageData(0, 0, svg_img.width, svg_img.height);
+    
+    for (let i = 0; i < imgData_out.data.length; i += 4) {
+      imgData_out.data[i] = 255-Math.abs(imgData_out.data[i]-imgData_in.data[i]);
+      imgData_out.data[i+1] = 255-Math.abs(imgData_out.data[i+1]-imgData_in.data[i+1]);
+      imgData_out.data[i+2] = 255-Math.abs(imgData_out.data[i+2]-imgData_in.data[i+2]);
+      imgData_out.data[i+3] = 255; //Math.abs(imgData_out.data[i+3]-imgData_in.data[i+3]);
+    }
+    ctx_out.putImageData(imgData_out, 0, 0);
+    document.getElementById('svgc').appendChild(c_out);
+  }
+  svg_img.src = 'data:image/svg+xml;base64,' + btoa(document.getElementById('svgc').innerHTML);
+};
   
 
   let utils = new Utils('errorMessage');
