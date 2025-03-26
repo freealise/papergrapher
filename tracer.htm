@@ -90,7 +90,7 @@
 
   // https://answers.opencv.org/question/206557/how-can-you-use-k-means-clustering-to-posterize-an-image-using-opencv-javascript/
 
-var newImage, colors, cl, indices;
+var svg, newImage, colors, cl, indices;
 var clusterCount = null;
 var posterInput = [];
 var canvasOutput = [];
@@ -200,7 +200,7 @@ try {
   canvasOutput = new Array(clusterCount);
   document.getElementById('outputs').innerHTML = '';
 
-  var svg = '<svg height="'+newImage[0].rows+'" width="'+newImage[0].cols+'" xmlns="http://www.w3.org/2000/svg">';
+  svg = '<svg height="'+newImage[0].rows+'" width="'+newImage[0].cols+'" xmlns="http://www.w3.org/2000/svg">';
 
   for (var k=1; k<clusterCount; k++) {
     let src = cv.imread('posterInput' + k);
@@ -358,7 +358,7 @@ function calcDifference() {
 
 function exportSvg() {
 try {
-  window.top.document.getElementById('svgData').value = document.getElementById('svgc').innerHTML;
+  window.top.document.getElementById('svgData').value = svg;
 } catch(e) {alert(e);}
 };
   
