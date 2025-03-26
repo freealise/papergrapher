@@ -121,9 +121,11 @@ pg.menu = function() {
 		
 		jQuery('.traceImage_button').click(function () {
 			jQuery('#tracerIframe').toggleClass("hidden");
-			alert(document.getElementById("svgData").value);
-			if (document.getElementById("svgData").value != "") {
-				pg.import.importAndAddSVG(document.getElementById("svgData").value);
+			const svgData = document.getElementById("svgData");
+			alert(svgData.value);
+			if (svgData.value != "") {
+				pg.import.importAndAddSVG(svgData.value);
+				svgData.value = "";
 			}
 		});
 		
