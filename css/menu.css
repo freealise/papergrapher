@@ -141,6 +141,13 @@
 	opacity: 0;
 }
 
+#tracerIframe {
+	border: 1px solid gray;
+	position: absolute;
+	left: 4em;
+	top: 2em;
+}
+
 
 /* sub sub menu */
 
