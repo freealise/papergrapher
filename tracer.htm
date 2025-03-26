@@ -359,6 +359,7 @@ function calcDifference() {
 function exportSvg() {
 try {
   window.top.document.getElementById('svgData').value = 'data:image/svg+xml;base64,' + btoa(document.getElementById('svgc').innerHTML);
+  alert(window.top.document.getElementById('svgData').value);
 } catch(e) {alert(e);}
 };
   
