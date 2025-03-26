@@ -121,9 +121,9 @@ pg.menu = function() {
 		
 		jQuery('.traceImage_button').click(function () {
 			jQuery('#tracerIframe').toggleClass("hidden");
-			alert(jQuery('#svgData').value);
-			if (jQuery('#svgData').value != "") {
-				pg.import.importAndAddSVG(jQuery('#svgData').value);
+			alert(document.getElementById("svgData").value);
+			if (document.getElementById("svgData").value != "") {
+				pg.import.importAndAddSVG(document.getElementById("svgData").value);
 			}
 		});
 		
