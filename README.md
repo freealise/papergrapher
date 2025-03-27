@@ -4,7 +4,7 @@ Vector Editor based on Paper.js
 A working version can be found at https://w00dn.github.io/papergrapher/
 
 ## TODO:
-make points larger, add grid with optional alignment  
+add grid with optional alignment  
   
 raster image tracer: polylines -> paths with holes, with simplifyPath and unite/subtract (https://stackoverflow.com/questions/71077189/merging-two-bezier-based-shapes-into-one-to-create-a-new-outline/), or geometrizer / primitive.js  
 use polylines with MA interpolation instead of Bezier curves for usability  
