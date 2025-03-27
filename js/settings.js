@@ -23,6 +23,7 @@ pg.settings = function () {
 			}
 			
 			document.title = 'Papergrapher '+config.appVersion;
+			paper.settings.handleSize = config.handleSize;
 			
 		}).error(function(jqXHR, textStatus, errorThrown) {
 			console.error('Loading config.json failed: '+errorThrown);
