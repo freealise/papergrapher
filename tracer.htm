@@ -95,6 +95,23 @@ var clusterCount = null;
 var posterInput = [];
 var canvasOutput = [];
 
+
+function rgbaToHsla(r, g, b, a) {
+  r /= 255; g /= 255; b /= 255;
+  let max = Math.max(r, g, b);
+  let min = Math.min(r, g, b);
+  let d = max - min;
+  let h;
+  if (d === 0) h = 0;
+  else if (max === r) h = (g - b) / d % 6;
+  else if (max === g) h = (b - r) / d + 2;
+  else if (max === b) h = (r - g) / d + 4;
+  let l = (min + max) / 2;
+  let s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  return [Math.round(h*60), Math.round(s*100), Math.round(l*100), a];
+};
+
+
 function kmeans() {
 try {
 
@@ -132,7 +149,9 @@ try {
     cl[i][2] = parseInt(centers.floatAt(i, 2));
     cl[i][3] = parseFloat(centers.floatAt(i, 3)/255);
 
-    colors[i] = 'rgba(' + cl[i][0] + ',' + cl[i][1] + ',' + cl[i][2] + ',' + cl[i][3].toFixed(2) + ')';
+    var hsla = rgbaToHsla(cl[i][0], cl[i][1], cl[i][2], cl[i][3]);
+
+    colors[i] = 'hsla(' + hsla[0] + ',' + hsla[1] + '%,' + hsla[2] + '%,' + hsla[3].toFixed(2) + ')';
     console.log(colors[i]);
 
     for( var y = 0; y < mat.rows; y++ ) {
@@ -282,7 +301,10 @@ try {
       if (holes[i] === false) {
         svg = svg.slice(0,-1) + '" fill="'+colors[indices[k]]+'" stroke="'+colors[indices[k]]+'" stroke-width="0"/>';
       } else if (holes[i] === true) {
-        svg = svg.slice(0,-1) + '" fill="rgba(255,255,255,1.0)" stroke="rgba(255,255,255,1.0)" stroke-width="1"/>';
+        var clr = colors[indices[k]].split(',');
+        clr[2] = '100%';
+        clr = clr.join(',');
+        svg = svg.slice(0,-1) + '" fill="'+clr+'" stroke="'+clr+'" stroke-width="1"/>';
       } else {
         svg = svg.slice(0,-1) + '" fill="none" stroke="none" stroke-width="0"/>';
       }
