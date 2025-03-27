@@ -30,26 +30,7 @@ pg.import = function () {
 		paper.project.importSVG(svgString, {
 			expandShapes: true, 
 			onLoad: function(imp, svg) {
-				try {
-				var items = paper.project.getItems({ class: 'Group' });
-				
-				for (var i=0; i<items.length; i++) { //groups by color
-					for (var j=1; j<items[i].children.length; j++) { //paths
-						var p = items[i].children[j];
-					 
-						if (p.fillColor.lightness < 1.0) {
-							items[i].children[0].replaceWith(
-							 items[i].children[0].unite(items[i].children[j], { insert: false })
-							);
-						} else {
-							items[i].children[0].replaceWith(
-							 items[i].children[0].subtract(items[i].children[j], { insert: false })
-							);
-						}
-						
-					}
-				}
-				} catch(e) {alert(e)}
+				alert(JSON.stringify(imp));
 		 }
 		});
 		pg.undo.snapshot('importAndAddSVG');
