@@ -29,9 +29,11 @@ pg.import = function () {
 	var importAndAddSVG = function (svgString) {
 		paper.project.importSVG(svgString, {
 			expandShapes: true, 
-			onLoad: function(item, svg) {
+			onLoad: function(imp, svg) {
 				try {
-				alert(paper.project.getItems({ class: 'Group' }));
+				var items = paper.project.getItems({ class: 'Group' });
+				var item = items[items.length-1];
+				
 				for (var i=0; i<item.children.length; i++) { //groups by color
 					for (var j=1; j<item.children[i].children.length; j++) { //paths
 						var p = item.children[i].children[j];
@@ -47,7 +49,6 @@ pg.import = function () {
 					}
 				}
 				} catch(e) {alert(e)}
-				return item;
 		 }
 		});
 		pg.undo.snapshot('importAndAddSVG');
