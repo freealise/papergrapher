@@ -27,7 +27,12 @@ pg.import = function () {
 	
 	
 	var importAndAddSVG = function (svgString) {
-		paper.project.importSVG(svgString, {expandShapes: true});
+		paper.project.importSVG(svgString, {
+			expandShapes: true, 
+			onLoad: function(item, svg) {
+			 alert(item);
+		 }
+		});
 		pg.undo.snapshot('importAndAddSVG');
 		paper.project.view.update();
 	};
