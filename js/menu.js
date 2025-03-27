@@ -129,6 +129,10 @@ pg.menu = function() {
 			}
 		});
 		
+		jQuery('.ungroup_button').click(function () {
+				pg.group.ungroupSelection();
+		});
+		
 		jQuery('.exportJSON_button').click(function() {
 			pg.document.saveJSONDocument();
 		});
