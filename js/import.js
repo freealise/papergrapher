@@ -30,7 +30,22 @@ pg.import = function () {
 		paper.project.importSVG(svgString, {
 			expandShapes: true, 
 			onLoad: function(item, svg) {
-			 alert(JSON.stringify(item.children));
+				try {
+				for (var i=0; i<item.children.length; i++) { //groups by color
+					for (var j=1; j<item.children[i].children.length; j++) { //paths
+						var p = item.children[i].children[j];
+						if (p.fillColor.lightness < 1.0) {
+							item.children[i].children[0].replaceWith(
+							 item.children[i].children[0].unite(item.children[i].children[j])
+							);
+						} else {
+							item.children[i].children[0].replaceWith(
+							 item.children[i].children[0].subtract(item.children[i].children[j])
+							);
+						}
+					}
+				}
+				} catch(e) {alert(e)}
 		 }
 		});
 		pg.undo.snapshot('importAndAddSVG');
