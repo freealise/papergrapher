@@ -32,18 +32,17 @@ pg.import = function () {
 			onLoad: function(imp, svg) {
 				try {
 				var items = paper.project.getItems({ class: 'Group' });
-				var item = items[items.length-1];
 				
-				for (var i=0; i<item.children.length; i++) { //groups by color
-					for (var j=1; j<item.children[i].children.length; j++) { //paths
-						var p = item.children[i].children[j];
+				for (var i=0; i<items.length; i++) { //groups by color
+					for (var j=1; j<items[i].children.length; j++) { //paths
+						var p = items[i].children[j];
 						if (p.fillColor.lightness < 1.0) {
-							item.children[i].children[0].replaceWith(
-							 item.children[i].children[0].unite(item.children[i].children[j])
+							items[i].children[0].replaceWith(
+							 items[i].children[0].unite(items[i].children[j])
 							);
 						} else {
-							item.children[i].children[0].replaceWith(
-							 item.children[i].children[0].subtract(item.children[i].children[j])
+							items[i].children[0].replaceWith(
+							 items[i].children[0].subtract(items[i].children[j])
 							);
 						}
 					}
