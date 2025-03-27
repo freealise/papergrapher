@@ -46,6 +46,7 @@ pg.import = function () {
 					}
 				}
 				} catch(e) {alert(e)}
+				return item;
 		 }
 		});
 		pg.undo.snapshot('importAndAddSVG');
