@@ -30,7 +30,7 @@ pg.import = function () {
 		paper.project.importSVG(svgString, {
 			expandShapes: true, 
 			onLoad: function(item, svg) {
-			 alert(JSON.stringify(item));
+			 alert(JSON.stringify(item.children));
 		 }
 		});
 		pg.undo.snapshot('importAndAddSVG');
