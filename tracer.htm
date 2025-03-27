@@ -237,7 +237,7 @@ try {
 
     // approximates each contour to polygon
     let points = [];
-    for (let i = 0; i < contours.size(); ++i) {
+    for (let i = 0; i < contours.size(); i++) {
       let tmp = new cv.Mat();
       let cnt = contours.get(i);
 
@@ -278,9 +278,9 @@ try {
     //alert(JSON.stringify(hier) + '\n\n' + JSON.stringify(holes));
 
     // draw contours
-    svg += '<g id="'+colors[indices[k]]+'">';
-    for (let i = 0; i < contours.size(); ++i) {
-      svg += '<polygon points="';
+    svg += '<path fill="'+colors[indices[k]]+'" stroke="'+colors[indices[k]]+'" fill-rule="evenodd" stroke-width="0" d="';
+    for (let i = 1; i < contours.size(); i++) {
+      if (i == 0 && points[0][0].x == 0 && points[0][0].y == 0) { continue; }
 
       let color = new cv.Scalar(Math.round(i / contours.size() * 128 + 127), Math.round(i / contours.size() * 128 + 127), Math.round(i / contours.size() * 128 + 127));
       cv.drawContours(dst, poly, i, color, 1, cv.LINE_AA, hierarchy, 0);
@@ -291,26 +291,11 @@ try {
         dst.ucharPtr(points[i][j].y, points[i][j].x)[2] = 255;
         dst.ucharPtr(points[i][j].y, points[i][j].x)[3] = 255;
 
-        svg += points[i][j].x + ',' + points[i][j].y + ' ';
-      }
-      if (i == 0 && points[0][0].x == 0 && points[0][0].y == 0) {
-        /*for (let j = 0; j < holes.length; j++) {
-          holes[j] = !holes[j];
-        }*/
-        holes[0] = null;  //is the frame
-      }
-      if (holes[i] === false) {
-        svg = svg.slice(0,-1) + '" fill="'+colors[indices[k]]+'" stroke="'+colors[indices[k]]+'" stroke-width="0"/>';
-      } else if (holes[i] === true) {
-        var clr = colors[indices[k]].split(',');
-        clr[2] = '100%';
-        clr = clr.join(',');
-        svg = svg.slice(0,-1) + '" fill="'+clr+'" stroke="'+clr+'" stroke-width="1"/>';
-      } else {
-        svg = svg.slice(0,-1) + '" fill="none" stroke="none" stroke-width="0"/>';
+        if (j == 0) { svg += 'M'; } else { svg += 'L'; }
+        svg += points[i][j].x + ' ' + points[i][j].y + ' ';
       }
     }
-    svg += '</g>';
+    svg += 'Z"/>';
 
     canvasOutput[k] = document.createElement("canvas");
     canvasOutput[k].id = 'canvasOutput' + k;
