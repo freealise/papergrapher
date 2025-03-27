@@ -31,6 +31,7 @@ pg.import = function () {
 			expandShapes: true, 
 			onLoad: function(item, svg) {
 				try {
+				alert(project.getItems({ class: Group }));
 				for (var i=0; i<item.children.length; i++) { //groups by color
 					for (var j=1; j<item.children[i].children.length; j++) { //paths
 						var p = item.children[i].children[j];
