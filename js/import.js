@@ -36,6 +36,7 @@ pg.import = function () {
 				for (var i=0; i<items.length; i++) { //groups by color
 					for (var j=1; j<items[i].children.length; j++) { //paths
 						var p = items[i].children[j];
+						alert(JSON.stringify(p) + ' ' + p.fillColor.lightness);
 						if (p.fillColor.lightness < 1.0) {
 							items[i].children[0].replaceWith(
 							 items[i].children[0].unite(items[i].children[j])
