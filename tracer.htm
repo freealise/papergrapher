@@ -278,6 +278,7 @@ try {
     //alert(JSON.stringify(hier) + '\n\n' + JSON.stringify(holes));
 
     // draw contours
+    svg += '<g id="'+colors[indices[k]]+'">';
     for (let i = 0; i < contours.size(); ++i) {
       svg += '<polygon points="';
 
@@ -309,6 +310,7 @@ try {
         svg = svg.slice(0,-1) + '" fill="none" stroke="none" stroke-width="0"/>';
       }
     }
+    svg += '</g>';
 
     canvasOutput[k] = document.createElement("canvas");
     canvasOutput[k].id = 'canvasOutput' + k;
