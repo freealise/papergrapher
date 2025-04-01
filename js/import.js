@@ -33,8 +33,23 @@ pg.import = function () {
 				alert(JSON.stringify(imp));
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].children;
-				for ( var i=0; i<paths.length; i++) {
-					 paths[i].simplify(0.001);
+				var d = 3;
+				for (var i=0; i<paths.length; i++) {
+					for (var j=0; j<paths[i].segments.length; j++) {
+						var x = 0;
+						var y = 0;
+						for (var k=-parseInt(d/2); k<=parseInt(d/2); k++) {
+							if (j+k >= 0) {
+					   x += paths[i].segments[j+k].point.x;
+					   y += paths[i].segments[j+k].point.y;
+							} else {
+								x += paths[i].segments[paths[i].segments.length+j+k].point.x;
+					   y += paths[i].segments[paths[i].segments.length+j+k].point.y;
+							}
+						}
+						paths[i].segments[j].point.x = x / d;
+						paths[i].segments[j].point.y = y / d;
+					}
 				}
 		 }
 		});
