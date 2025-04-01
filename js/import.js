@@ -66,7 +66,7 @@ pg.import = function () {
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
 					var j=0;
 					while (paths[i].segments[j]) {
-					 if (diffs[indxs[j]] < Math.sqrt(2)/8) {
+					 if (corners[j] === false) {
 							paths[i].segments[j].remove();
 						} else {
 							j++;
