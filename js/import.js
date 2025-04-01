@@ -55,7 +55,7 @@ pg.import = function () {
 						}
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
 						indxs[j] = j;
-						if (diffs[j] >= Math.sqrt(2)/8) {
+						if (diffs[j] >= Math.sqrt(2)/16) {
 						 paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
 							corners[j] = true;
@@ -66,14 +66,15 @@ pg.import = function () {
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
 					var j=0;
 					while (paths[i].segments[j]) {
-						if (diffs[j] < Math.sqrt(2)/8) {
+						if (corners[j] === false) {
 							paths[i].segments.splice(j,1);
 							diffs.splice(j,1);
+							corners.splice(j,1);
 						} else {
 							j++;
 						}
 					}
-					paths[i].smooth({ type: 'continuous' });
+					//paths[i].smooth({ type: 'continuous' });
 				}
 				items[items.length-1].scale(7.5);
 			} catch(e) {alert(e);}
