@@ -30,15 +30,16 @@ pg.import = function () {
 		paper.project.importSVG(svgString, {
 			expandShapes: true, 
 			onLoad: function(imp, svg) {
-				alert(JSON.stringify(imp));
+			try {
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].children;
 				for (var i=0; i<paths.length; i++) {
 					for (var j=0; j<paths[i].segments.length; j++) {
-					 paths[i].segments[j].point.x += Math.random()-0.5;
-						paths[i].segments[j].point.y += Math.random()-0.5;
+					 paths[i].segments[j].point.x += Math.random()*10-5;
+						paths[i].segments[j].point.y += Math.random()*10-5;
 					}
 				}
+			} catch(e) {alert(e);}
 		 }
 		});
 		pg.undo.snapshot('importAndAddSVG');
