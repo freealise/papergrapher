@@ -55,7 +55,7 @@ pg.import = function () {
 						}
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
 						indxs[j] = j;
-						if (diffs[j] >= 0.15) {
+						if (diffs[j] >= Math.sqrt(2)/8) {
 						 paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
 							corners[j] = true;
@@ -74,7 +74,7 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].smooth({ type: 'continuous' });
+					//paths[i].smooth({ type: 'continuous' });
 				}
 				items[items.length-1].scale(7.5);
 			} catch(e) {alert(e);}
