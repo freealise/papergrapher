@@ -55,13 +55,13 @@ pg.import = function () {
 						}
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
 						indxs[j] = j;
-						if (diffs[j] >= 0.125) {
+						if (diffs[j] >= 0.125*Math.sqrt(2)) {
 							corners[j] = true;
 						} else {
 							corners[j] = false;
+							paths[i].segments[j].point.x = x/w;
+						 paths[i].segments[j].point.y = y/w;
 						}
-						paths[i].segments[j].point.x = x/w;
-						paths[i].segments[j].point.y = y/w;
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
 					var j=0;
@@ -74,7 +74,7 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].simplify(0.125);
+					paths[i].simplify(0.0625);
 				}
 				items[items.length-1].scale(7.5);
 			} catch(e) {alert(e);}
