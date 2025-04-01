@@ -34,7 +34,10 @@ pg.import = function () {
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].children;
 				for (var i=0; i<paths.length; i++) {
-					paths[i].simplify(0.5);
+					for (var j=0; j<paths[i].segments.length; j++) {
+					 paths[i].segments[j].point.x += Math.random()-0.5;
+						paths[i].segments[j].point.y += Math.random()-0.5;
+					}
 				}
 		 }
 		});
