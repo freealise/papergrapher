@@ -61,16 +61,10 @@ pg.import = function () {
 							corners[j] = true;
 						} else {
 							corners[j] = false;
+							paths[i].removeSegment(j);
 						}
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
-					var j=0;
-					while (paths[i].segments[j]) {
-					 if (corners[j] === false) {
-							paths[i].segments[j].remove();
-						}
-						j++;
-					}
 					paths[i].smooth({ type: 'continuous' });
 				}
 				items[items.length-1].scale(7.5);
