@@ -55,7 +55,7 @@ pg.import = function () {
 						}
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
 						indxs[j] = j;
-						if (diffs[j] >= Math.sqrt(2)/8) {
+						if (diffs[j] >= 1/8) {
 						 paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
 							corners[j] = true;
