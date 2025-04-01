@@ -33,7 +33,7 @@ pg.import = function () {
 				alert(JSON.stringify(imp));
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].children;
-				var d = 3;
+				var d = 5;
 				for (var i=0; i<paths.length; i++) {
 					for (var j=0; j<paths[i].segments.length; j++) {
 						var x = 0;
