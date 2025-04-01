@@ -62,7 +62,7 @@ pg.import = function () {
 							corners[j] = null;
 							paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
-							paths[i].segments[j].smooth();
+							paths[i].segments[j].smooth({ type: 'catmull-rom', factor: 0.0 });
 						} else {
 							corners[j] = false;
 							paths[i].segments[j].point.x = x/w;
