@@ -58,6 +58,9 @@ pg.import = function () {
 						paths[i].segments[j].point.y = y/w;
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
+					for (var j=0; j<16; j++) {
+						paths[i].segments[indxs[j]].selected = true;
+					}
 					//paths[i].smooth({ type: 'continuous' });
 				}
 			} catch(e) {alert(e);}
