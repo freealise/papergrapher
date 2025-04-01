@@ -54,7 +54,6 @@ pg.import = function () {
 						paths[i].segments[j].point.y = y/w;
 					}
 					paths[i].smooth({ type: 'continuous' });
-					paths[i].simplify(0.125);
 				}
 			} catch(e) {alert(e);}
 		 }
