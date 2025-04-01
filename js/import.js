@@ -39,12 +39,15 @@ pg.import = function () {
 						var x = 0;
 					 var y = 0;
 						for (var k=j-parseInt(w/2); k<=j+parseInt(w/2); k++) {
-							if (k>=0) {
+							if (k>=0 && k<paths[i].segments.length) {
 								x += paths[i].segments[k].point.x;
 								y += paths[i].segments[k].point.y;
-							} else {
+							} else if (k<0) {
 								x += paths[i].segments[paths[i].segments.length+k].point.x;
 								y += paths[i].segments[paths[i].segments.length+k].point.y;
+							} else if (k>=paths[i].segments.length) {
+								x += paths[i].segments[k-paths[i].segments.length].point.x;
+								y += paths[i].segments[k-paths[i].segments.length].point.y;
 							}
 						}
 						paths[i].segments[j].point.x = x/w;
