@@ -31,7 +31,7 @@
 
 <button class="val" onclick="document.getElementById('th').value-=2;">&lt;</button><input class="range" id="th" type="range" value="3" min="3" max="255" step="2" style="width:256px"/><button class="val" onclick="document.getElementById('th').value++;">&gt;</button> threshold<br/>
 <button class="val" onclick="document.getElementById('sb').value--;">&lt;</button><input class="range" id="sb" type="range" value="0" min="0" max="255" step="1" style="width:256px"/><button class="val" onclick="document.getElementById('sb').value++;">&gt;</button> subtractor<br/>
-<button class="val" onclick="document.getElementById('dp').value--;">&lt;</button><input class="range" id="dp" type="range" value="0" min="0" max="255" step="1" style="width:256px"/><button class="val" onclick="document.getElementById('dp').value++;">&gt;</button> polygon<br/>
+<button class="val" onclick="document.getElementById('dp').value--;">&lt;</button><input class="range" id="dp" type="range" value="-1" min="-1" max="254" step="1" style="width:256px"/><button class="val" onclick="document.getElementById('dp').value++;">&gt;</button> polygon<br/>
 
   <select id="ath" oninput="trace();"><option value="cv.ADAPTIVE_THRESH_MEAN_C" selected>mean</option><option value="cv.ADAPTIVE_THRESH_GAUSSIAN_C">gaussian</option></select>
 
@@ -233,7 +233,7 @@ try {
     let hierarchy = new cv.Mat();
     let poly = new cv.MatVector();
 
-    cv.findContours(src, contours, hierarchy, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE);
+    cv.findContours(src, contours, hierarchy, cv.RETR_TREE, cv.CHAIN_APPROX_NONE);
 
     // approximates each contour to polygon
     let points = [];
@@ -241,8 +241,12 @@ try {
       let tmp = new cv.Mat();
       let cnt = contours.get(i);
 
-      // You can try more different parameters
-      cv.approxPolyDP(cnt, tmp, document.getElementById('dp').value, true);
+      if (document.getElementById('dp').value >= 0) {
+        // You can try more different parameters
+        cv.approxPolyDP(cnt, tmp, document.getElementById('dp').value, true);
+      } else {
+        tmp = cnt.clone();
+      }
 
       poly.push_back(tmp);
       points[i] = [];
