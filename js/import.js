@@ -34,7 +34,7 @@ pg.import = function () {
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].children;
 				for ( var i=0; i<paths.length; i++) {
-					 paths[i].simplify(0);
+					 paths[i].simplify(0.001);
 				}
 		 }
 		});
