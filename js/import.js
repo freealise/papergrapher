@@ -37,7 +37,6 @@ pg.import = function () {
 				for (var i=0; i<paths.length; i++) {
 					var diffs = [];
 					var indxs = [];
-					var avg = 0;
 					for (var j=0; j<paths[i].segments.length; j++) {
 						var x = 0;
 					 var y = 0;
@@ -55,14 +54,12 @@ pg.import = function () {
 						}
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
 						indxs[j] = j;
-						avg += diffs[j];
 						paths[i].segments[j].point.x = x/w;
 						paths[i].segments[j].point.y = y/w;
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
-					avg /= diffs.length;
 					var j = 0;
-					while (diffs[indxs[j]] > avg) {
+					while (diffs[indxs[j]] > 0.5) {
 						 paths[i].segments[indxs[j]].selected = true;
 							j++;
 					}
