@@ -32,8 +32,9 @@ pg.import = function () {
 			onLoad: function(imp, svg) {
 				alert(JSON.stringify(imp));
 				var items = paper.project.getItems({ class: 'Group' });
-				for (var i=0; i<items[items.length-1].children.length; i++) {
-					items[items.length-1].children[i].flatten(1);
+				var paths = items[items.length-1].children;
+				for (var i=0; i<paths.length; i++) {
+					paths[i].smooth({ type: 'catmull-rom' });
 				}
 		 }
 		});
