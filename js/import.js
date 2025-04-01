@@ -63,7 +63,6 @@ pg.import = function () {
 							corners[j] = null;
 							paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
-							paths[i].segments[j].smooth({ type: 'catmull-rom', factor: 0.5 });
 						} else {
 							corners[j] = false;
 							paths[i].segments[j].point.x = x/w;
@@ -77,6 +76,8 @@ pg.import = function () {
 							paths[i].segments.splice(j,1);
 							diffs.splice(j,1);
 							corners.splice(j,1);
+						} else if (corners[j] === null) {
+							paths[i].segments[j].smooth({ type: 'catmull-rom', factor: 0.5 });
 						} else {
 							j++;
 						}
