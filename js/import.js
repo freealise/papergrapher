@@ -78,6 +78,7 @@ pg.import = function () {
 							corners.splice(j,1);
 						} else if (corners[j] === null) {
 							paths[i].segments[j].smooth({ type: 'catmull-rom', factor: 0.5 });
+							j++;
 						} else {
 							j++;
 						}
