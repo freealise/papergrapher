@@ -50,7 +50,7 @@ pg.import = function () {
 								y += paths[i].segments[k-paths[i].segments.length].point.y;
 							}
 						}
-						if (Math.abs(paths[i].segments[j].point.x - x/w) <= 0.7 && Math.abs(paths[i].segments[j].point.y - y/w) <= 0.7) {
+						if ((Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w)) <= 1.0) {
 						 paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
 						}
