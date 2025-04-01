@@ -38,6 +38,7 @@ pg.import = function () {
 					var diffs = [];
 					var indxs = [];
 					var corners = [];
+					paths[i].smooth({ type: 'catmull-rom', factor: 0.5 });
 					for (var j=0; j<paths[i].segments.length; j++) {
 						var x = 0;
 					 var y = 0;
@@ -62,7 +63,7 @@ pg.import = function () {
 							corners[j] = null;
 							paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
-							paths[i].segments[j].smooth({ type: 'catmull-rom', factor: 0.0 });
+							paths[i].segments[j].smooth({ type: 'catmull-rom', factor: 0.5 });
 						} else {
 							corners[j] = false;
 							paths[i].segments[j].point.x = x/w;
