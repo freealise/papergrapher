@@ -31,12 +31,24 @@ pg.import = function () {
 			expandShapes: true, 
 			onLoad: function(imp, svg) {
 			try {
+				var w = 3;
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].getItems({ class: 'Path' });
 				for (var i=0; i<paths.length; i++) {
 					for (var j=0; j<paths[i].segments.length; j++) {
-					 paths[i].segments[j].point.x += Math.random()*10-5;
-						paths[i].segments[j].point.y += Math.random()*10-5;
+						var x = 0;
+					 var y = 0;
+						for (var k=j-parseInt(w/2); k<=j+parseInt(w/2); k++) {
+							if (k>=0) {
+								x += paths[i].segments[k].point.x;
+								y += paths[i].segments[k].point.y;
+							} else {
+								x += paths[i].segments[paths[i].segments.length+k].point.x;
+								y += paths[i].segments[paths[i].segments.length+k].point.y;
+							}
+						}
+						paths[i].segments[j].point.x = x/w;
+						paths[i].segments[j].point.y = y/w;
 					}
 				}
 			} catch(e) {alert(e);}
