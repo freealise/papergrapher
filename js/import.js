@@ -31,6 +31,11 @@ pg.import = function () {
 			expandShapes: true, 
 			onLoad: function(imp, svg) {
 				alert(JSON.stringify(imp));
+				var items = paper.project.getItems({ class: 'Group' });
+				var paths = items[items.length-1].children;
+				for ( var i=0; i<paths.length; i++) {
+					 paths[i].smooth();
+				}
 		 }
 		});
 		pg.undo.snapshot('importAndAddSVG');
