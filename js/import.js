@@ -31,14 +31,14 @@ pg.import = function () {
 			expandShapes: true, 
 			onLoad: function(imp, svg) {
 			try {
-				var w = 3;
+				var w = 2;
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].getItems({ class: 'Path' });
 				for (var i=0; i<paths.length; i++) {
 					for (var j=0; j<paths[i].segments.length; j++) {
 						var x = 0;
 					 var y = 0;
-						for (var k=j-parseInt(w/2); k<=j+parseInt(w/2); k++) {
+						for (var k=j-parseInt(w/2); k<j+parseInt(w/2); k++) {
 							if (k>=0 && k<paths[i].segments.length) {
 								x += paths[i].segments[k].point.x;
 								y += paths[i].segments[k].point.y;
