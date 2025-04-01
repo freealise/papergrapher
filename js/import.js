@@ -50,10 +50,12 @@ pg.import = function () {
 								y += paths[i].segments[k-paths[i].segments.length].point.y;
 							}
 						}
-						paths[i].segments[j].point.x = x/w;
-						paths[i].segments[j].point.y = y/w;
+						if (Math.abs(paths[i].segments[j].point.x - x/w) < 0.5 && Math.abs(paths[i].segments[j].point.y - y/w) < 0.5) {
+						 paths[i].segments[j].point.x = x/w;
+						 paths[i].segments[j].point.y = y/w;
+						}
 					}
-					paths[i].smooth({ type: 'continuous' });
+					//paths[i].smooth({ type: 'continuous' });
 				}
 			} catch(e) {alert(e);}
 		 }
