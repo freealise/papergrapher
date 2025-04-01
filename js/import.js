@@ -61,10 +61,18 @@ pg.import = function () {
 							corners[j] = true;
 						} else {
 							corners[j] = false;
-							paths[i].removeSegment(j);
 						}
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
+					var j=0;
+					while (paths[i].segments[j]) {
+						if (diffs[j] < Math.sqrt(2)/8) {
+							paths[i].segments.splice(j,1);
+							diffs.splice(j,1);
+						} else {
+							j++;
+						}
+					}
 					paths[i].smooth({ type: 'continuous' });
 				}
 				items[items.length-1].scale(7.5);
