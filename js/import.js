@@ -38,7 +38,7 @@ pg.import = function () {
 					var diffs = [];
 					var indxs = [];
 					var corners = [];
-					paths[i].smooth({ type: 'continuous' });
+					paths[i].smooth({ type: 'catmull-rom' });
 					for (var j=0; j<paths[i].segments.length; j++) {
 						var x = 0;
 					 var y = 0;
@@ -82,6 +82,8 @@ pg.import = function () {
 					for (var j=0; j<paths[i].segments.length; j++) {
 						if (corners[j] === true) {
 							paths[i].segments[j].clearHandles();
+						} else {
+							
 						}
 					}
 				}
