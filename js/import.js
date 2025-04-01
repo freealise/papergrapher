@@ -32,7 +32,7 @@ pg.import = function () {
 			onLoad: function(imp, svg) {
 			try {
 				var items = paper.project.getItems({ class: 'Group' });
-				var paths = items[items.length-1].children;
+				var paths = items[items.length-1].getItems({ class: 'Path' });
 				for (var i=0; i<paths.length; i++) {
 					for (var j=0; j<paths[i].segments.length; j++) {
 					 paths[i].segments[j].point.x += Math.random()*10-5;
