@@ -35,6 +35,7 @@ pg.import = function () {
 				var paths = items[items.length-1].children;
 				for (var i=0; i<paths.length; i++) {
 					paths[i].smooth({ type: 'catmull-rom' });
+					paths[i].flatten(1);
 				}
 		 }
 		});
