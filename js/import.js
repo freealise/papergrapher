@@ -59,8 +59,10 @@ pg.import = function () {
 						paths[i].segments[j].point.y = y/w;
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
-					for (var j=0; j<paths[i].segments.length/16; j++) {
+					var j = 0;
+					while (diffs[indxs[j]] > 0.5) {
 						 paths[i].segments[indxs[j]].selected = true;
+							j++;
 					}
 					//paths[i].smooth({ type: 'continuous' });
 				}
