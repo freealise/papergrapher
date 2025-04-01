@@ -74,7 +74,7 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].smooth({ type: 'continuous' });
+					paths[i].smooth({ type: 'geometric' });
 				}
 				items[items.length-1].scale(7.5);
 			} catch(e) {alert(e);}
