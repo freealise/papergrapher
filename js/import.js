@@ -78,7 +78,7 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].smooth({ type: 'catmull-rom', factor: 0.5 });
+					paths[i].simplify(0.001);
 					for (var j=0; j<paths[i].segments.length; j++) {
 						if (corners[j] === true) {
 							paths[i].segments[j].clearHandles();
