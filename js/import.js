@@ -79,6 +79,7 @@ pg.import = function () {
 							j++;
 						}
 					}
+					paths[i].simplify(0.00000001);
 					for (var j=0; j<paths[i].segments.length; j++) {
 						if (corners[j] === true) {
 							paths[i].segments[j].clearHandles();
