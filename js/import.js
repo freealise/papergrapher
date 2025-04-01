@@ -74,8 +74,7 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].smooth({ type: 'catmull-rom', factor: 0.0 });
-					//paths[i].simplify(0.001);
+					paths[i].simplify(0.001);
 				}
 				items[items.length-1].scale(7.5);
 			} catch(e) {alert(e);}
