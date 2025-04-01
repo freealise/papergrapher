@@ -60,7 +60,7 @@ pg.import = function () {
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
 					var j = 0;
-					while (diffs[indxs[j]] > 0.5) {
+					while (diffs[indxs[j]] > 1.0) {
 						 paths[i].segments[indxs[j]].selected = true;
 							j++;
 					}
