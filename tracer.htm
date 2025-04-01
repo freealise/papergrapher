@@ -233,7 +233,7 @@ try {
     let hierarchy = new cv.Mat();
     let poly = new cv.MatVector();
 
-    cv.findContours(src, contours, hierarchy, cv.RETR_TREE, cv.CHAIN_APPROX_NONE);
+    cv.findContours(src, contours, hierarchy, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE);
 
     // approximates each contour to polygon
     let points = [];
