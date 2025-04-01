@@ -33,6 +33,7 @@ pg.import = function () {
 			try {
 				var w = 3;
 				var items = paper.project.getItems({ class: 'Group' });
+				items[items.length-1].scale(10);
 				var paths = items[items.length-1].getItems({ class: 'Path' });
 				for (var i=0; i<paths.length; i++) {
 					var diffs = [];
@@ -57,7 +58,7 @@ pg.import = function () {
 						paths[i].segments[j].point.x = x/w;
 						paths[i].segments[j].point.y = y/w;
 					}
-					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
+					indxs.sort(function(a,b){ return diffs[a] > diffs[b]; });
 					for (var j=0; j<paths[i].segments.length/16; j++) {
 						 paths[i].segments[indxs[j]].selected = true;
 					}
