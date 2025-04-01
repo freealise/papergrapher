@@ -68,9 +68,8 @@ pg.import = function () {
 					while (paths[i].segments[j]) {
 					 if (corners[j] === false) {
 							paths[i].segments[j].remove();
-						} else {
-							j++;
 						}
+						j++;
 					}
 					paths[i].smooth({ type: 'continuous' });
 				}
