@@ -37,6 +37,7 @@ pg.import = function () {
 				for (var i=0; i<paths.length; i++) {
 					var diffs = [];
 					var indxs = [];
+					var corners = [];
 					for (var j=0; j<paths[i].segments.length; j++) {
 						var x = 0;
 					 var y = 0;
@@ -54,15 +55,21 @@ pg.import = function () {
 						}
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
 						indxs[j] = j;
-						paths[i].segments[j].point.x = x/w;
-						paths[i].segments[j].point.y = y/w;
+						if (diffs[j] >= Math.sqrt(2)/8) {
+						 paths[i].segments[j].point.x = x/w;
+						 paths[i].segments[j].point.y = y/w;
+							corners[j] = true;
+						} else {
+							corners[j] = false;
+						}
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
-					for (var j=0; j<indxs.length; j++) {
-					 if (diffs[indxs[j]] > Math.sqrt(2)/8) {
-						 paths[i].segments[indxs[j]].selected = true;
+					var j=0;
+					while (paths[i].segments[j]) {
+					 if (diffs[indxs[j]] < Math.sqrt(2)/8) {
+							paths[i].segments[j].remove();
 						} else {
-							paths[i].segments[indxs[j]].remove();
+							j++;
 						}
 					}
 					paths[i].smooth({ type: 'continuous' });
