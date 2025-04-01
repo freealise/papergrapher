@@ -35,6 +35,8 @@ pg.import = function () {
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].getItems({ class: 'Path' });
 				for (var i=0; i<paths.length; i++) {
+					var diffs = [];
+					var indxs = [];
 					for (var j=0; j<paths[i].segments.length; j++) {
 						var x = 0;
 					 var y = 0;
@@ -50,11 +52,12 @@ pg.import = function () {
 								y += paths[i].segments[k-paths[i].segments.length].point.y;
 							}
 						}
-						if ((Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w)) <= 1.0) {
-						 paths[i].segments[j].point.x = x/w;
-						 paths[i].segments[j].point.y = y/w;
-						}
+						diffs[j] = Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w);
+						indxs[j] = j;
+						paths[i].segments[j].point.x = x/w;
+						paths[i].segments[j].point.y = y/w;
 					}
+					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
 					//paths[i].smooth({ type: 'continuous' });
 				}
 			} catch(e) {alert(e);}
