@@ -55,8 +55,14 @@ pg.import = function () {
 						}
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
 						indxs[j] = j;
-						if (diffs[j] >= 0.125*Math.sqrt(2)) {
+						if (diffs[j] >= Math.sqrt(2)/8) {
+							paths[i].segments[j].clearHandles();
 							corners[j] = true;
+						} else if (diffs[j] >= 1/8) {
+							corners[j] = null;
+							paths[i].segments[j].point.x = x/w;
+						 paths[i].segments[j].point.y = y/w;
+							paths[i].segments[j].smooth();
 						} else {
 							corners[j] = false;
 							paths[i].segments[j].point.x = x/w;
@@ -74,7 +80,6 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].simplify(0.0625);
 				}
 				items[items.length-1].scale(7.5);
 			} catch(e) {alert(e);}
