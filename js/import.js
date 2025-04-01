@@ -56,7 +56,6 @@ pg.import = function () {
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
 						indxs[j] = j;
 						if (diffs[j] >= Math.sqrt(2)/8) {
-							paths[i].segments[j].clearHandles();
 							corners[j] = true;
 						} else if (diffs[j] >= 1/8) {
 							corners[j] = null;
@@ -79,7 +78,7 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].smooth({ type: 'catmull-rom', factor: 0.5 });
+					paths[i].smooth({ type: 'continuous' });
 					for (var j=0; j<paths[i].segments.length; j++) {
 						if (corners[j] === true) {
 							paths[i].segments[j].clearHandles();
