@@ -57,7 +57,7 @@ pg.import = function () {
 						indxs[j] = j;
 						if (diffs[j] >= Math.sqrt(2)/8) {
 							corners[j] = true;
-						} else if (j/w == parseInt(j/w)) { // diffs[j] >= 1/8
+						} else if (diffs[j] >= 1/8) {
 							corners[j] = null;
 							paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
@@ -78,12 +78,11 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].smooth();
 					for (var j=0; j<paths[i].segments.length; j++) {
 						if (corners[j] === true) {
 							paths[i].segments[j].clearHandles();
 						} else {
-							
+							paths[i].segments[j].smooth();
 						}
 					}
 				}
