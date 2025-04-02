@@ -66,19 +66,23 @@ pg.import = function () {
 						 paths[i].segments[j].point.y = y/w;
 						}
 					}
-					paths[i].smooth();
 					var j=0;
 					while (paths[i].segments[j]) {
 						if (corners[j] === false) {
 							paths[i].segments.splice(j,1);
 							diffs.splice(j,1);
 							corners.splice(j,1);
-						} else if (corners[j] === true) {
-							paths[i].segments[j].clearHandles();
-							j++;
 						} else {
 							j++;
 						}
+					}
+					paths[i].smooth();
+					var j=0;
+					while (paths[i].segments[j]) {
+						if (corners[j] === true) {
+							paths[i].segments[j].clearHandles();
+						}
+						j++;
 					}
 				}
 				items[items.length-1].scale(7.5);
