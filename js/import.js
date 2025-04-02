@@ -66,16 +66,6 @@ pg.import = function () {
 						 paths[i].segments[j].point.y = y/w;
 						}
 					}
-					var j=0;
-					while (paths[i].segments[j]) {
-						if (corners[j] === false && parseInt(j*corner) == j*corner) {
-							paths[i].segments.splice(j,1);
-							diffs.splice(j,1);
-							corners.splice(j,1);
-						} else {
-							j++;
-						}
-					}
 					paths[i].smooth();
 					var j=0;
 					while (paths[i].segments[j]) {
