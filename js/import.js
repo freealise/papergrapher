@@ -36,7 +36,6 @@ pg.import = function () {
 				var paths = items[items.length-1].getItems({ class: 'Path' });
 				for (var i=0; i<paths.length; i++) {
 					var diffs = [];
-					var indxs = [];
 					var corners = [];
 					for (var j=0; j<paths[i].segments.length; j++) {
 						var x = 0;
@@ -54,7 +53,6 @@ pg.import = function () {
 							}
 						}
 						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w))/2;
-						indxs[j] = j;
 						if (diffs[j] >= Math.sqrt(2)/8) {
 							corners[j] = true;
 						} else if (diffs[j] >= 1/8) {
@@ -67,22 +65,18 @@ pg.import = function () {
 						 paths[i].segments[j].point.y = y/w;
 						}
 					}
-					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
+					paths[i].smooth();
 					var j=0;
 					while (paths[i].segments[j]) {
 						if (corners[j] === false) {
 							paths[i].segments.splice(j,1);
 							diffs.splice(j,1);
 							corners.splice(j,1);
+						} else if (corners[j] === true) {
+							paths[i].segments[j].clearHandles();
+							j++;
 						} else {
 							j++;
-						}
-					}
-					for (var j=0; j<paths[i].segments.length; j++) {
-						if (corners[j] === true) {
-							paths[i].segments[j].clearHandles();
-						} else {
-							paths[i].segments[j].smooth();
 						}
 					}
 				}
