@@ -32,7 +32,7 @@ pg.import = function () {
 			onLoad: function(imp, svg) {
 			try {
 				var w = 3;
-				var corner = 1/8;
+				var corner = 1/4;
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].getItems({ class: 'Path' });
 				for (var i=0; i<paths.length; i++) {
@@ -53,10 +53,10 @@ pg.import = function () {
 								y += paths[i].segments[k-paths[i].segments.length].point.y;
 							}
 						}
-						diffs[j] = [Math.abs(paths[i].segments[j].point.x - x/w), Math.abs(paths[i].segments[j].point.y - y/w)];
-						if (diffs[j][0] >= Math.sqrt(2)*corner || diffs[j][1] >= Math.sqrt(2)*corner) {
+						diffs[j] = (Math.abs(paths[i].segments[j].point.x - x/w) + Math.abs(paths[i].segments[j].point.y - y/w));
+						if (diffs[j] >= Math.sqrt(2)*corner) {
 							corners[j] = true;
-						} else if (diffs[j][0] >= corner || diffs[j][1] >= corner) {
+						} else if (diffs[j] >= corner) {
 							corners[j] = null;
 							paths[i].segments[j].point.x = x/w;
 						 paths[i].segments[j].point.y = y/w;
