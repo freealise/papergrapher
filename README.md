@@ -6,10 +6,13 @@ A working version can be found at https://w00dn.github.io/papergrapher/
 ## TODO:
 add grid with optional alignment  
   
-geometrizer / primitive.js  
 use polylines with MA interpolation instead of Bezier curves for usability  
+(lerp, smooth by moving average, lerp the difference from original points, add it to result  
+keypoints are integers aligned to grid when dragging, all other points in path are floats)  
+  
 halftone points / lines / shapes in RGB or CMYK (dither or scatter vector point coordinates by varying random distance)  
 storyboards as vectorized photos; connect to Panoramera  
+geometrizer / primitive.js  
   
 ### handle mouse velocity  
 http://paperjs.org/features/#mouse-interaction  
