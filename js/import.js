@@ -68,7 +68,7 @@ pg.import = function () {
 						}
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
-					paths[i].smooth({ type: 'catmull-rom' });
+					paths[i].smooth();
 					var j=0;
 					while (paths[i].segments[j]) {
 						if (corners[j] === false) {
