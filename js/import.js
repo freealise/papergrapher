@@ -32,7 +32,7 @@ pg.import = function () {
 			onLoad: function(imp, svg) {
 			try {
 				var w = 3;
-				var corner = 1/4;
+				var corner = 1/3;
 				var items = paper.project.getItems({ class: 'Group' });
 				var paths = items[items.length-1].getItems({ class: 'Path' });
 				for (var i=0; i<paths.length; i++) {
