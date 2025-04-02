@@ -68,7 +68,6 @@ pg.import = function () {
 						}
 					}
 					indxs.sort(function(a,b){ return diffs[a] < diffs[b]; });
-					paths[i].smooth();
 					var j=0;
 					while (paths[i].segments[j]) {
 						if (corners[j] === false) {
@@ -79,6 +78,7 @@ pg.import = function () {
 							j++;
 						}
 					}
+					paths[i].smooth();
 					for (var j=0; j<paths[i].segments.length; j++) {
 						if (corners[j] === true) {
 							paths[i].segments[j].clearHandles();
