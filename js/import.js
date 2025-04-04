@@ -79,7 +79,7 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].smooth();
+					paths[i].smooth({ type: 'continuous' });
 					var j=0;
 					while (paths[i].segments[j]) {
 						if (corners[j] === true) {
