@@ -66,7 +66,6 @@ pg.import = function () {
 						 paths[i].segments[j].point.y = y/w;
 						}
 					}
-					paths[i].smooth();
 					var j=0;
 					while (paths[i].segments[j]) {
 						if (corners[j] === false) {
@@ -79,6 +78,14 @@ pg.import = function () {
 						} else {
 							j++;
 						}
+					}
+					paths[i].smooth();
+					var j=0;
+					while (paths[i].segments[j]) {
+						if (corners[j] === true) {
+							paths[i].segments[j].clearHandles();
+						}
+						j++;
 					}
 				}
 				items[items.length-1].scale(7.5);
