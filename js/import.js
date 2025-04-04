@@ -79,7 +79,7 @@ pg.import = function () {
 							j++;
 						}
 					}
-					paths[i].smooth({ type: 'continuous' });
+					paths[i].smooth({ type: 'catmull-rom' });
 					var j=0;
 					while (paths[i].segments[j]) {
 						if (corners[j] === true) {
