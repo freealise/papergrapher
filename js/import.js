@@ -53,7 +53,7 @@ pg.import = function () {
 								y += paths[i].segments[k-paths[i].segments.length].point.y;
 							}
 						}
-						diffs[j] = Math.sqrt( Math.pow((data[i][0] - x/w), 2) + Math.pow((data[i][1] - y/w), 2) );;
+						diffs[j] = Math.sqrt( Math.pow((paths[i].segments[j].point.x - x/w), 2) + Math.pow((paths[i].segments[j].point.y - y/w), 2) );;
 						if (diffs[j] >= Math.sqrt(2)*corner) {
 							corners[j] = true;
 						} else if (diffs[j] >= corner) {
