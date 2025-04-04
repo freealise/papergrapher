@@ -284,7 +284,6 @@ try {
     // draw contours
     svg += '<path fill="'+colors[indices[k]]+'" stroke="'+colors[indices[k]]+'" fill-rule="evenodd" stroke-width="0" d="';
     for (let i = 1; i < contours.size(); i++) {
-      if (i == 0 && points[0][0].x == 0 && points[0][0].y == 0) { continue; }
 
       let color = new cv.Scalar(Math.round(i / contours.size() * 128 + 127), Math.round(i / contours.size() * 128 + 127), Math.round(i / contours.size() * 128 + 127));
       cv.drawContours(dst, poly, i, color, 1, cv.LINE_AA, hierarchy, 0);
@@ -295,7 +294,7 @@ try {
         dst.ucharPtr(points[i][j].y, points[i][j].x)[2] = 255;
         dst.ucharPtr(points[i][j].y, points[i][j].x)[3] = 255;
 
-        if (j == 0) { svg += 'M'; } else { svg += 'L'; }
+        if (j == 0) { if (i > 1) {svg += 'Z ';} svg += 'M'; } else { svg += 'L'; }
         svg += points[i][j].x + ' ' + points[i][j].y + ' ';
       }
     }
